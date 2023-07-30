@@ -7,6 +7,7 @@ export async function POST(req: NextRequest) {
   switch (body.event) {
     case "recording.statusUpdate": {
       console.log("Recording status updated", body);
+      break;
     }
     default:
       console.log("Unknown event", body);
