@@ -1,11 +1,12 @@
-import { createClient } from "@supabase/supabase-js";
+import { StorageClient } from "@supabase/storage-js";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+
+const storageClient = new StorageClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, {
+  apikey: process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY!}`,
+});
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -18,7 +19,7 @@ export async function POST(req: NextRequest) {
         });
         const blob = await getRecordingResponse.blob();
         const file = new File([blob], "recording.mp4", { type: "video/mp4" });
-        const { error } = await supabase.storage
+        const { error } = await storageClient
           .from("recordings")
           .upload(outputFileName, file);
         if (!error) {
