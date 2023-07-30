@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
           method: "GET",
         });
         const blob = await getRecordingResponse.blob();
-        const file = new File([blob], "recording.mp4", { type: "video/mp4" });
+        const file = new File([blob], outputFileName, { type: "video/mp4" });
         const { error } = await storageClient
           .from("recordings")
           .upload(outputFileName, file);

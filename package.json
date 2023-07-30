@@ -21,5 +21,9 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "encoding": "^0.1.13",
+    "supabase": "^1.82.2"
   }
 }
